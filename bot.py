@@ -701,6 +701,9 @@ def main():
     print("🚀 Bot Running...")
     app.run_polling()
 
-
+# Copy this EXACTLY and replace the bottom part of your file
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error: {e}")
