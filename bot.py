@@ -31,7 +31,6 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 ADMIN_ID_RAW = os.getenv("ADMIN_ID", "0")
 
-# Handle cases where env vars might be missing during build
 if not TELEGRAM_TOKEN or not GEMINI_API_KEY:
     print("⚠️ Warning: Tokens not found. Ensure they are set in the Hosting Dashboard.")
 
@@ -41,7 +40,7 @@ except ValueError:
     ADMIN_ID = 0
 
 
-# -------------------- KEEP ALIVE SERVER (NEW) --------------------
+# -------------------- KEEP ALIVE SERVER (REQUIRED) --------------------
 # This allows UptimeRobot to ping the bot so it never sleeps.
 app_flask = Flask('')
 
@@ -82,7 +81,6 @@ def detect_language(text: str) -> str:
 # -------------------- TYPING ANIMATION --------------------
 async def type_animation(update: Update, context, text="💬 Bot is typing…", delay=0.6):
     try:
-        # Use native typing action if possible
         await context.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
     except:
         pass
@@ -109,7 +107,7 @@ async def ask_gemini(prompt: str) -> str:
     def call():
         try:
             resp = genai_client.models.generate_content(
-                model="gemini-2.0-flash", # Use standard model name
+                model="gemini-2.0-flash", 
                 contents=prompt
             )
             if hasattr(resp, "text") and resp.text:
@@ -293,7 +291,7 @@ async def handle_message(update, context):
 # START BOT
 # ------------------------------------------------------
 def main():
-    # START THE KEEP ALIVE SERVER BEFORE THE BOT
+    # START KEEP ALIVE
     keep_alive()
 
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).persistence(persistence).build()
