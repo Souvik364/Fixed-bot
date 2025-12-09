@@ -89,6 +89,8 @@ async def send_temp_confirmation(update: Update, text="Message sent ✅", delay=
 
 
 # -------------------- STATIC MESSAGES --------------------
+DEFAULT_CONFIRMATION = "Message sent ✅"
+
 WELCOME_MESSAGE = (
     "👋 Welcome to Friday Bazar Support!\n"
     "💬 Please type your query, our team will reply to you soon."
